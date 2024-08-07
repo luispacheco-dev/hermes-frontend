@@ -1,4 +1,5 @@
 import styles from "./Layout.module.css"
+import Navbar from "../shared/Navbar.jsx";
 import { Outlet } from "react-router-dom";
 
 /*
@@ -12,7 +13,7 @@ function Layout() {
     return (
         <div className={`${styles.div}`}>
             <div className={`${styles.container}`}>
-                <span>Nav here...</span>
+                <Navbar />
                 <Outlet />
             </div>
         </div>
