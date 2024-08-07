@@ -16,6 +16,11 @@ import DropdownIcon from "../../assets/dropdown.svg"
 
 function Navbar() {
 
+    const dumbProfileData = {
+        picture: ProfilePic,
+        username: "Luis Enrique Pacheco Torres"
+    }
+
     const [showMenu, setShowMenu] = useState(false)
     const toggleMenu = () => { setShowMenu(!showMenu) }
 
@@ -34,8 +39,8 @@ function Navbar() {
             </ul>
             <div className={`${styles.profile_data} ${!showMenu ? styles.collapse : ""}`}>
                 <div onClick={toggleMenu}>
-                    <img src={ProfilePic} alt="" />
-                    <span>Hi, Luis Enrique</span>
+                    <img src={dumbProfileData.picture} alt="" />
+                    <span>Hi, {dumbProfileData.username.split(" ")[0]}</span>
                     <img className={`${showMenu ? styles.rotate : ""}`} src={DropdownIcon} alt="" />
                 </div>
                 <ul>
