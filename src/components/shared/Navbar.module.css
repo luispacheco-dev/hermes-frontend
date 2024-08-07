@@ -13,56 +13,58 @@
     font-family: "Pacifico", sans-serif;
 }
 
-.nav_menu {
+.nav_items {
     gap: 30px;
     display: flex;
     align-items: center;
 }
 
-.nav_menu li {
+.nav_items li {
     gap: 5px;
     display: flex;
     list-style: none;
     align-items: center;
 }
 
-.nav_menu li a {
-    color: white;
-    font-weight: 500;
-    align-self: flex-end;
-    text-decoration: none;
+.nav_items li:hover {
+    opacity: 0.8;
 }
 
-.profile_container {
+.nav_items li a {
+    font-weight: 500;
+    align-self: flex-end;
+}
+
+.profile_data {
     position: relative;
 }
 
 .collapse ul {
-    display: none;
+    display: none !important;
 }
 
-.profile {
+.profile_data div {
     gap: 5px;
     display: flex;
     user-select: none;
     align-items: center;
 }
 
-.profile:hover {
+.profile_data div:hover {
     cursor: pointer;
 }
 
-.profile img {
+.profile_data div img {
     width: 32px;
     height: 32px;
     border-radius: 5px;
 }
 
-.profile span {
+.profile_data div span {
     font-weight: 500;
 }
 
-.profile img:last-child {
+.profile_data div img:last-child {
     width: 24px;
     height: 24px;
     margin-top: 3px;
@@ -72,7 +74,7 @@
     rotate: 180deg;
 }
 
-.profile_menu {
+.profile_data ul {
     gap: 10px;
     width: 100%;
     padding: 10px;
@@ -84,18 +86,18 @@
     background-color: black;
 }
 
-.profile_menu li {
+.profile_data ul li {
     gap: 5px;
     display: flex;
     list-style: none;
     align-items: center;
 }
 
-.profile_menu li:hover {
+.profile_data ul li:hover {
     opacity: 0.8;
 }
 
-.profile_menu li a {
+.profile_data ul li a {
     width: 100%;
     color: white;
     font-weight: 500;

@@ -1,3 +1,4 @@
+import { useState } from "react"
 import styles from "./Navbar.module.css"
 import ProfilePic from "../../assets/sample.png"
 import LogoutIcon from "../../assets/logout.svg"
@@ -5,7 +6,6 @@ import RequestsIcon from "../../assets/inbox.svg"
 import FriendsIcon from "../../assets/friends.svg"
 import ProfileIcon from "../../assets/profile.svg"
 import DropdownIcon from "../../assets/dropdown.svg"
-import { useState } from "react"
 
 /*
  * Nav bar component
@@ -21,8 +21,8 @@ function Navbar() {
 
     return (
         <nav className={`${styles.nav}`}>
-            <h6>Hermes</h6>
-            <ul className={`${styles.nav_menu}`}>
+            <h6><a href="/">Hermes</a></h6>
+            <ul className={`${styles.nav_items}`}>
                 <li>
                     <img src={FriendsIcon} alt="" />
                     <a href="/friends">Friends</a>
@@ -32,13 +32,13 @@ function Navbar() {
                     <a href="/requests">Requests</a>
                 </li>
             </ul>
-            <div className={`${styles.profile_container} ${!showMenu ? styles.collapse : ""}`}>
-                <div className={`${styles.profile}`} onClick={toggleMenu}>
+            <div className={`${styles.profile_data} ${!showMenu ? styles.collapse : ""}`}>
+                <div onClick={toggleMenu}>
                     <img src={ProfilePic} alt="" />
                     <span>Hi, Luis Enrique</span>
                     <img className={`${showMenu ? styles.rotate : ""}`} src={DropdownIcon} alt="" />
                 </div>
-                <ul className={`${styles.profile_menu}`}>
+                <ul>
                     <li>
                         <img src={ProfileIcon} alt="" />
                         <a href="/profile">Profile</a>
