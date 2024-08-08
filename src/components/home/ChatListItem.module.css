@@ -1,0 +1,88 @@
+.div {
+    gap: 30px;
+    height: 70px;
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.div:hover {
+    cursor: pointer;
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+.chat_data {
+    flex: 1;
+    gap: 10px;
+    display: flex;
+    align-items: center;
+}
+
+.chat_data img {
+    width: 48px;
+    height: 48px;
+    border-radius: 10px;
+}
+
+.chat_data div {
+    flex: 1;
+}
+
+.message_sender,
+.message_content {
+    display: flex;
+    justify-content: space-between;
+}
+
+.message_sender span:first-child {
+    font-weight: bold;
+}
+
+.message_sender span:last-child {
+    font-weight: 500;
+    color: rgb(200, 200, 200);
+}
+
+.message_content span:first-child {
+    font-weight: 500;
+    color: rgb(200, 200, 200);
+}
+
+.focus {
+    color: white !important;
+}
+
+.nrm {
+    border-radius: 5px;
+    font-weight: bold;
+    background-color: red;
+    padding: 0px 5px 0px 5px;
+}
+
+.chat_status {
+    width: 70px;
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.chat_status span {
+    font-weight: bold;
+    font-size: 0.8rem;
+    border-radius: 20px;
+    padding: 3px 10px 3px 10px;
+}
+
+.online {
+    color: green;
+    border: 2px solid green;
+    background-color: rgba(0, 255, 0, 0.1);
+}
+
+.offline {
+    color: red;
+    border: 2px solid red;
+    background-color: rgba(255, 0, 0, 0.1);
+}
