@@ -4,6 +4,7 @@ import { Routes } from "react-router-dom"
 import Home from "./components/home/Home.jsx"
 import { BrowserRouter } from "react-router-dom"
 import Layout from "./components/layout/Layout.jsx"
+import Friends from "./components/friends/Friends.jsx"
 
 /*
  * App component (Router)
@@ -18,6 +19,7 @@ function App() {
             <Routes>
                 <Route path="/" element={<Layout />}>
                     <Route index element={<Home />} />
+                    <Route path="/friends" element={<Friends />} />
                 </Route>
                 <Route path="*" element={<>Page not found</>} />
             </Routes>
