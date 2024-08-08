@@ -1,0 +1,91 @@
+.div {
+    flex: 1;
+    gap: 15px;
+    display: flex;
+    flex-flow: column;
+}
+
+.div h6 {
+    font-weight: bold;
+    font-size: 1.5rem;
+}
+
+.div h6 span {
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+.div>div:first-child {
+    display: flex;
+    justify-content: space-between;
+}
+
+.div>div:first-child img {
+    width: 24px;
+    height: 24px;
+    align-self: center;
+}
+
+.div>div:first-child img:hover {
+    opacity: 0.8;
+    cursor: pointer;
+}
+
+.friend_list {
+    display: flex;
+    flex-flow: column;
+}
+
+.friend_list>div {
+    gap: 30px;
+    height: 70px;
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.profile {
+    flex: 1;
+    gap: 10px;
+    display: flex;
+    align-items: center;
+}
+
+.profile img {
+    width: 48px;
+    height: 48px;
+    border-radius: 10px;
+}
+
+.profile>div {
+    width: 100%;
+}
+
+.profile>div>span {
+    color: rgb(200, 200, 200);
+}
+
+.profile>div>div {
+    display: flex;
+    justify-content: space-between;
+}
+
+.profile>div>div span:first-child {
+    font-weight: bold;
+}
+
+.profile>div>div span:last-child {
+    font-weight: 500;
+    color: rgb(200, 200, 200);
+}
+
+.actions {
+    display: flex;
+    flex-flow: column;
+    justify-content: center !important;
+}
+
+.actions img:hover {
+    opacity: 0.8;
+    cursor: pointer;
+}
