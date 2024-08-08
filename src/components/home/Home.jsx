@@ -1,4 +1,5 @@
 import { useState } from "react"
+import ChatBox from "./ChatBox.jsx"
 import ChatList from "./ChatList.jsx"
 import styles from "./Home.module.css"
 
@@ -14,13 +15,16 @@ function Home() {
     const [currentChatId, setCurrentChatId] = useState(0)
 
     const onClickChat = (id) => {
-        console.log(id)
         setCurrentChatId(id)
+    }
+    const resetCurrentChat = () => {
+        setCurrentChatId(0)
     }
 
     return (
         <div className={`${styles.div}`}>
             {currentChatId === 0 && <ChatList onClick={onClickChat} />}
+            {currentChatId !== 0 && <ChatBox chatId={currentChatId} onBack={resetCurrentChat} />}
         </div>
     )
 }
