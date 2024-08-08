@@ -1,0 +1,125 @@
+.div {
+    gap: 10px;
+    height: 100%;
+    display: flex;
+    flex-flow: column;
+    justify-content: space-between;
+}
+
+.toolbar {
+    height: 70px;
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.toolbar div:last-child {
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+}
+
+.profile {
+    gap: 10px;
+    display: flex;
+    align-items: center;
+}
+
+.profile img:first-child {
+    width: 24px;
+    height: 24px;
+}
+
+.profile img:first-child:hover {
+    opacity: 0.8;
+    cursor: pointer;
+}
+
+.profile img {
+    width: 48px;
+    height: 48px;
+    border-radius: 10px;
+}
+
+.profile div {
+    display: flex;
+    flex-flow: column;
+}
+
+.profile div span:first-child {
+    font-weight: bold;
+}
+
+.active {
+    color: green;
+    font-weight: bold;
+}
+
+.non_active {
+    font-weight: 500;
+    color: rgb(200, 200, 200);
+}
+
+.messages {
+    flex: 1;
+    gap: 10px;
+    display: flex;
+    flex-flow: column;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.messages div {
+    display: flex;
+    padding: 10px;
+    flex-flow: column;
+    align-self: flex-start;
+    border-radius: 10px 10px 10px 0px;
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.messages div span:last-child {
+    font-weight: 500;
+    font-size: 0.8rem;
+    color: rgb(200, 200, 200);
+}
+
+.from_current_user {
+    align-self: flex-end !important;
+    border-radius: 10px 10px 0px 10px !important;
+    background-color: rgba(0, 0, 0, 0.2) !important;
+}
+
+.from_current_user span:last-child {
+    text-align: right !important;
+}
+
+.form {
+    gap: 10px;
+    height: 50px;
+    display: flex;
+}
+
+.form input {
+    flex: 1;
+    height: 100%;
+    padding: 10px;
+    font-weight: 500;
+    border-radius: 5px;
+}
+
+.form input:focus {
+    outline: none;
+}
+
+.form button {
+    color: white;
+    padding: 10px;
+    font-weight: 500;
+    border-radius: 5px;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.form button:hover {
+    opacity: 0.8;
+    cursor: pointer;
+}
