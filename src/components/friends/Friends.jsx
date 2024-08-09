@@ -4,9 +4,11 @@ import Alert from "../shared/Alert.jsx"
 import AddFriend from "./AddFriend.jsx"
 import styles from "./Friends.module.css"
 import AddIcon from "../../assets/add.svg"
+import DeleteFrienda from "./DeleteFriend.jsx"
 import Searchbar from "../shared/Searchbar.jsx"
 import ProfilePic from "../../assets/sample.png"
 import DeleteIcon from "../../assets/delete.svg"
+import DeleteFriend from "./DeleteFriend.jsx"
 
 /*
  * Friends page
@@ -39,6 +41,7 @@ function Friends() {
     const [friends, setFriends] = useState([])
     const [friendsCounter, setFriendsCounter] = useState(0)
     const [filteredFriends, setFilteredFriends] = useState([])
+    const [selectedFriend, setSelectedFriend] = useState(null)
     const [showAddFriendForm, setShowAddFriendForm] = useState(false)
 
     useEffect(() => {
@@ -47,7 +50,15 @@ function Friends() {
         setFriendsCounter(dumbFriendsData.length)
     }, [])
 
-    const onChangeQuery = (query) => setQuery(query)
+    const onChangeQuery = (query) => {
+        setQuery(query)
+        if (query === "") {
+            setFilteredFriends(friends)
+        }
+        setFilteredFriends(friends.filter((friend) => friend.username.startsWith(query)))
+    }
+
+    const onDeleteFriend = (friend) => setSelectedFriend(friend)
     const toggleAddFriendForm = () => setShowAddFriendForm(!showAddFriendForm)
 
     return (
@@ -60,7 +71,7 @@ function Friends() {
             <div className={`${styles.friend_list}`}>
                 {filteredFriends.map((friend) => {
                     return (
-                        <div>
+                        <div key={friend.id}>
                             <div className={`${styles.profile}`}>
                                 <img src={friend.picture} alt="" />
                                 <div>
@@ -72,7 +83,7 @@ function Friends() {
                                 </div>
                             </div>
                             <div className={`${styles.actions}`}>
-                                <img src={DeleteIcon} alt="" />
+                                <img src={DeleteIcon} alt="" onClick={() => onDeleteFriend(friend)} />
                             </div>
                         </div>
                     )
@@ -80,6 +91,7 @@ function Friends() {
             </div>
             {showAddFriendForm && <AddFriend onClick={toggleAddFriendForm} setResponse={setAlert} />}
             {alert && <Alert message={alert.message} success={alert.success} onDismiss={() => setAlert(null)} />}
+            {selectedFriend && <DeleteFriend friend={selectedFriend} setResponse={setAlert} onDismiss={() => setSelectedFriend(null)} />}
         </div>
     )
 }
