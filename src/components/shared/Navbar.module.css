@@ -76,6 +76,7 @@
 
 .profile_data ul {
     gap: 10px;
+    z-index: 1;
     width: 100%;
     padding: 10px;
     display: flex;
