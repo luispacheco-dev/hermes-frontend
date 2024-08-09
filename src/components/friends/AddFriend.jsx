@@ -8,10 +8,17 @@ import CloseIcon from "../../assets/add.svg"
  * @returns {JSX.Element} The rendered Add friend component
  */
 
-function AddFriend({ onClick }) {
+function AddFriend({ onClick, setResponse }) {
+
+    const handleSumbit = (e) => {
+        e.preventDefault()
+        onClick()
+        setResponse({ success: true, message: "Request sended" })
+    }
+
     return (
         <div className={`${styles.div}`}>
-            <form className={`${styles.form}`}>
+            <form className={`${styles.form}`} onSubmit={(e) => handleSumbit(e)}>
                 <div>
                     <h6>Add Friend</h6>
                     <img src={CloseIcon} alt="" onClick={onClick} />
