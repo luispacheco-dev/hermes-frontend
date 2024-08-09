@@ -1,10 +1,11 @@
 import { useState } from "react"
+import { useEffect } from "react"
+import AddFriend from "./AddFriend.jsx"
 import styles from "./Friends.module.css"
 import AddIcon from "../../assets/add.svg"
 import Searchbar from "../shared/Searchbar.jsx"
 import ProfilePic from "../../assets/sample.png"
 import DeleteIcon from "../../assets/delete.svg"
-import { useEffect } from "react"
 
 /*
  * Friends page
@@ -36,6 +37,7 @@ function Friends() {
     const [friends, setFriends] = useState([])
     const [friendsCounter, setFriendsCounter] = useState(0)
     const [filteredFriends, setFilteredFriends] = useState([])
+    const [showAddFriendForm, setShowAddFriendForm] = useState(false)
 
     useEffect(() => {
         setFriends(dumbFriendsData)
@@ -44,12 +46,13 @@ function Friends() {
     }, [])
 
     const onChangeQuery = (query) => setQuery(query)
+    const toggleAddFriendForm = () => setShowAddFriendForm(!showAddFriendForm)
 
     return (
         <div className={`${styles.div}`}>
             <div>
                 <h6>Friends <span>({friendsCounter})</span></h6>
-                <img src={AddIcon} alt="" />
+                <img src={AddIcon} alt="" onClick={toggleAddFriendForm} />
             </div>
             <Searchbar query={query} onChange={onChangeQuery} />
             <div className={`${styles.friend_list}`}>
@@ -73,6 +76,7 @@ function Friends() {
                     )
                 })}
             </div>
+            {showAddFriendForm && <AddFriend onClick={toggleAddFriendForm} />}
         </div>
     )
 }
