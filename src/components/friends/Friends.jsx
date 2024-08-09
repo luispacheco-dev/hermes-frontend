@@ -1,5 +1,6 @@
 import { useState } from "react"
 import { useEffect } from "react"
+import Alert from "../shared/Alert.jsx"
 import AddFriend from "./AddFriend.jsx"
 import styles from "./Friends.module.css"
 import AddIcon from "../../assets/add.svg"
@@ -34,6 +35,7 @@ function Friends() {
     ]
 
     const [query, setQuery] = useState("")
+    const [alert, setAlert] = useState(null)
     const [friends, setFriends] = useState([])
     const [friendsCounter, setFriendsCounter] = useState(0)
     const [filteredFriends, setFilteredFriends] = useState([])
@@ -76,7 +78,8 @@ function Friends() {
                     )
                 })}
             </div>
-            {showAddFriendForm && <AddFriend onClick={toggleAddFriendForm} />}
+            {showAddFriendForm && <AddFriend onClick={toggleAddFriendForm} setResponse={setAlert} />}
+            {alert && <Alert message={alert.message} success={alert.success} onDismiss={() => setAlert(null)} />}
         </div>
     )
 }
