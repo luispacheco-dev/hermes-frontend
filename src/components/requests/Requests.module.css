@@ -1,0 +1,104 @@
+.div {
+    flex: 1;
+    gap: 15px;
+    display: flex;
+    flex-flow: column;
+    position: relative;
+}
+
+.div h6 {
+    font-weight: bold;
+    font-size: 1.5rem;
+}
+
+.div h6 span {
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+.requests {
+    display: flex;
+    flex-flow: column;
+}
+
+.request {
+    gap: 30px;
+    height: 70px;
+    display: flex;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.profile {
+    flex: 1;
+    gap: 10px;
+    display: flex;
+    align-items: center;
+}
+
+.profile img {
+    width: 48px;
+    height: 48px;
+    border-radius: 10px;
+}
+
+.profile>div {
+    flex: 1;
+}
+
+.profile>div div {
+    display: flex;
+    justify-content: space-between;
+}
+
+.profile>div div p {
+    font-weight: bold;
+}
+
+.profile>div div p span {
+    font-weight: 500;
+    font-size: 0.8rem;
+    color: rgb(200, 200, 200);
+}
+
+.profile>div div>span {
+    font-weight: 500;
+    color: rgb(200, 200, 200);
+}
+
+.profile>div>span {
+    font-weight: 500;
+    color: rgb(200, 200, 200);
+}
+
+.actions {
+    gap: 10px;
+    display: flex;
+    align-items: center;
+}
+
+.actions button {
+    background: transparent;
+}
+
+.actions button:hover {
+    opacity: 0.8;
+    cursor: pointer;
+}
+
+.actions button:first-child {
+    color: white;
+    font-size: 0.8rem;
+    border-radius: 5px;
+    padding: 3px 5px 3px 5px;
+    background-color: rgba(0, 255, 0, 0.2);
+    border: 1px solid rgba(0, 255, 0, 0.2);
+}
+
+.actions button:last-child {
+    color: white;
+    font-size: 0.8rem;
+    border-radius: 5px;
+    padding: 3px 5px 3px 5px;
+    background-color: rgba(255, 0, 0, 0.2);
+    border: 1px solid rgba(255, 0, 0, 0.2);
+}
