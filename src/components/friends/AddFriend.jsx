@@ -25,6 +25,7 @@ function AddFriend({ onClick, setResponse }) {
                 </div>
                 <div>
                     <input type="text" placeholder="Code" />
+                    <input type="textarea" placeholder="Greatings..." />
                     <button type="submit">Add</button>
                 </div>
             </form>

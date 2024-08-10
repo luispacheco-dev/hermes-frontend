@@ -39,6 +39,11 @@
     cursor: pointer;
 }
 
+.form>div:last-child {
+    display: flex;
+    flex-flow: column;
+}
+
 .form input {
     color: black;
     padding: 10px;
