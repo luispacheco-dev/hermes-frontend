@@ -7,6 +7,7 @@ import Login from "./components/login/Login.jsx"
 import Layout from "./components/layout/Layout.jsx"
 import Profile from "./components/profile/Profile.jsx"
 import Friends from "./components/friends/Friends.jsx"
+import Register from "./components/register/Register.jsx"
 import Requests from "./components/requests/Requests.jsx"
 
 /*
@@ -28,6 +29,7 @@ function App() {
                 </Route>
                 <Route path="/login" element={<Login />} />
                 <Route path="*" element={<>Page not found</>} />
+                <Route path="/register" element={<Register />} />
             </Routes>
         </BrowserRouter>
     )
