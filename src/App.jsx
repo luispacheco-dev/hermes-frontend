@@ -3,6 +3,7 @@ import { Route } from "react-router-dom"
 import { Routes } from "react-router-dom"
 import Home from "./components/home/Home.jsx"
 import { BrowserRouter } from "react-router-dom"
+import Login from "./components/login/Login.jsx"
 import Layout from "./components/layout/Layout.jsx"
 import Profile from "./components/profile/Profile.jsx"
 import Friends from "./components/friends/Friends.jsx"
@@ -25,6 +26,7 @@ function App() {
                     <Route path="/profile" element={<Profile />} />
                     <Route path="/requests" element={<Requests />} />
                 </Route>
+                <Route path="/login" element={<Login />} />
                 <Route path="*" element={<>Page not found</>} />
             </Routes>
         </BrowserRouter>
