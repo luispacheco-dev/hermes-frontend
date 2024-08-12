@@ -4,6 +4,7 @@ import { Routes } from "react-router-dom"
 import Home from "./components/home/Home.jsx"
 import { BrowserRouter } from "react-router-dom"
 import Login from "./components/login/Login.jsx"
+import Logout from "./components/shared/Logout.jsx"
 import Layout from "./components/layout/Layout.jsx"
 import Profile from "./components/profile/Profile.jsx"
 import Friends from "./components/friends/Friends.jsx"
@@ -31,6 +32,7 @@ function App() {
                     </Route>
                 </Route>
                 <Route path="/login" element={<Login />} />
+                <Route path="/logout" element={<Logout />} />
                 <Route path="*" element={<>Page not found</>} />
                 <Route path="/register" element={<Register />} />
             </Routes>
