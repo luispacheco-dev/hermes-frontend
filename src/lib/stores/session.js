@@ -1,4 +1,17 @@
 /*
+ * setSession
+ *
+ * @function
+ * @param {Object} payload - Authentication response (access, refresh, etc.)
+ */
+
+export function setSession(payload) {
+    localStorage.setItem("access", payload.access)
+    localStorage.setItem("refresh", payload.refresh)
+    localStorage.setItem("profile_id", payload.profile_id)
+}
+
+/*
  * getAccess
  *
  * @function
