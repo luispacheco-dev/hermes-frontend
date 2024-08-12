@@ -9,6 +9,7 @@ import Profile from "./components/profile/Profile.jsx"
 import Friends from "./components/friends/Friends.jsx"
 import Register from "./components/register/Register.jsx"
 import Requests from "./components/requests/Requests.jsx"
+import ProtectedRoute from "./components/shared/ProtectedRoute.jsx"
 
 /*
  * App component (Router)
@@ -21,11 +22,13 @@ function App() {
     return (
         <BrowserRouter>
             <Routes>
-                <Route path="/" element={<Layout />}>
-                    <Route index element={<Home />} />
-                    <Route path="/friends" element={<Friends />} />
-                    <Route path="/profile" element={<Profile />} />
-                    <Route path="/requests" element={<Requests />} />
+                <Route element={<ProtectedRoute />}>
+                    <Route path="/" element={<Layout />}>
+                        <Route index element={<Home />} />
+                        <Route path="/friends" element={<Friends />} />
+                        <Route path="/profile" element={<Profile />} />
+                        <Route path="/requests" element={<Requests />} />
+                    </Route>
                 </Route>
                 <Route path="/login" element={<Login />} />
                 <Route path="*" element={<>Page not found</>} />
