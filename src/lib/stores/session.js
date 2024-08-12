@@ -3,12 +3,26 @@
  *
  * @function
  * @param {Object} payload - Authentication response (access, refresh, etc.)
+ * @returns {}
  */
 
 export function setSession(payload) {
     localStorage.setItem("access", payload.access)
     localStorage.setItem("refresh", payload.refresh)
     localStorage.setItem("profile_id", payload.profile_id)
+}
+
+/*
+ * clearSession
+ *
+ * @function
+ * @returns {}
+ */
+
+export function clearSession() {
+    localStorage.removeItem("access")
+    localStorage.removeItem("refresh")
+    localStorage.removeItem("profile_id")
 }
 
 /*
