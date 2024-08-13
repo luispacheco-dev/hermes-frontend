@@ -36,4 +36,4 @@ export function getAccess() {
     return localStorage.getItem("access")
 }
 
-export default [getAccess]
+export default [getAccess, setSession, clearSession]
