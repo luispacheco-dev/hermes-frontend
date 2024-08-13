@@ -58,7 +58,6 @@ export async function logout() {
     const url = `${AUTH_ENDPOINT}/logout/`
 
     const accessToken = getAccess()
-    console.log(accessToken)
     const headers = { Authorization: `Bearer ${getAccess()}` }
 
     const response = await fetch(url, { headers: headers }).catch((error) => error)
