@@ -1,4 +1,5 @@
 import { AUTH_ENDPOINT } from "../constants"
+import { getAccess } from "../stores/session"
 
 /*
  * login
@@ -51,6 +52,22 @@ export async function register(payload) {
     }
 
     return { success: true, data: "Account created" }
+}
+
+export async function logout() {
+    const url = `${AUTH_ENDPOINT}/logout/`
+
+    const accessToken = getAccess()
+    console.log(accessToken)
+    const headers = { Authorization: `Bearer ${getAccess()}` }
+
+    const response = await fetch(url, { headers: headers }).catch((error) => error)
+
+    if (response.status !== 200) {
+        return { success: false, error: "Somenthing goes wrong" }
+    }
+
+    return { success: true, data: "Logout" }
 }
 
 export default [login]
