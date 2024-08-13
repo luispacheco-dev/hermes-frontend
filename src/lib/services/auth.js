@@ -1,4 +1,4 @@
-import { setSession } from "../stores/session"
+import { AUTH_ENDPOINT } from "../constants"
 
 /*
  * login
@@ -7,21 +7,24 @@ import { setSession } from "../stores/session"
  * @param {Object} data - User's email and password
  */
 
-export async function login(data) {
-    if (data.email !== "q@q.com") {
-        return {
-            success: false,
-            error: "Wrong email or password"
-        }
+export async function login(payload) {
+    const url = `${AUTH_ENDPOINT}/token/`
+
+    const response = await fetch(url, {
+        method: "POST",
+        body: JSON.stringify(payload),
+        headers: { "Content-Type": "application/json" },
+    }).catch((error) => error)
+
+    if (response.status === 500) {
+        return { success: false, error: "Somenthing goes wrong" }
     }
-    return {
-        success: true,
-        data: {
-            profile_id: 1,
-            access: "access",
-            refresh: "refresh",
-        }
+    if (response.status === 400) {
+        return { success: false, error: "Wrong email or password" }
     }
+
+    const data = await response.json()
+    return { success: true, data: data }
 }
 
 export default [login]
