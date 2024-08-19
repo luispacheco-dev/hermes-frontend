@@ -1,7 +1,7 @@
 import { useState } from "react"
 import Alert from "../shared/Alert.jsx"
 import styles from "./Register.module.css"
-import { register } from "../../lib/services/auth"
+import { register } from "../../lib/services/profile.js"
 
 /*
  * Register page
@@ -16,7 +16,11 @@ function Register() {
 
     const handleSubmit = async (event) => {
         event.preventDefault()
-        const data = Object.fromEntries(new FormData(event.target))
+        let data = Object.fromEntries(new FormData(event.target))
+        data = {
+            user: { email: data.email, password: data.password },
+            profile: { first_name: data.first_name, last_name: data.last_name }
+        }
         const response = await register(data)
 
         if (!response.success) {
