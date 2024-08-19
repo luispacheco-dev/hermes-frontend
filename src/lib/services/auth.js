@@ -18,10 +18,14 @@ export async function login(payload) {
     }).catch((error) => error)
 
     if (response.status === 500) {
-        return { success: false, error: "Somenthing goes wrong" }
+        return { success: false, error: "Internal Error" }
     }
-    if (response.status === 400) {
+    if (response.status === 401) {
         return { success: false, error: "Wrong email or password" }
+    }
+    if (response.status !== 200) {
+        console.log(await response.json())
+        return { success: false, error: "Something goes wrong" }
     }
 
     const data = await response.json()
