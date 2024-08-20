@@ -2,8 +2,9 @@ import { useState } from "react"
 import styles from "./Login.module.css"
 import Alert from "../shared/Alert.jsx"
 import { useNavigate } from "react-router-dom"
-import { login } from "../../lib/services/auth"
+import { login } from "../../lib/services/auth.js"
 import { setSession } from "../../lib/stores/session.js"
+import { updateLogged } from "../../lib/services/profile.js"
 
 /*
  * Login page
@@ -19,12 +20,17 @@ function Login() {
     const handleSumbit = async (event) => {
         event.preventDefault()
         const data = Object.fromEntries(new FormData(event.target))
-        const response = await login(data)
+        const session = await login(data)
+        if (!session.success) {
+            setAlert({ success: session.success, message: session.error })
+            return
+        }
+        setSession(session.data)
+        const response = await updateLogged(true)
         if (!response.success) {
             setAlert({ success: response.success, message: response.error })
             return
         }
-        setSession(response.data)
         navigate("/")
     }
 
