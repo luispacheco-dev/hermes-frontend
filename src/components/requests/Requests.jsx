@@ -2,7 +2,9 @@ import { useState } from "react"
 import { useEffect } from "react"
 import Alert from "../shared/Alert.jsx"
 import styles from "./Requests.module.css"
-import ProfilePic from "../../assets/sample.png"
+import { parseDateTime } from "../../lib/utils.js"
+import { getPictureUrl } from "../../lib/utils.js"
+import { getFriendRequests } from "../../lib/services/profile.js"
 
 /*
  * Requests page
@@ -13,33 +15,20 @@ import ProfilePic from "../../assets/sample.png"
 
 function Requests() {
 
-    const requestsData = [
-        {
-            id: 1,
-            code: "CFLS3201",
-            picture: ProfilePic,
-            sended_on: "9:30 PM",
-            greatings: "Hey man, is me!",
-            username: "Luis Enrique Pacheco Torres",
-        },
-        {
-            id: 2,
-            code: "3201CFLS",
-            picture: ProfilePic,
-            sended_on: "9:20 PM",
-            username: "John Smith",
-            greatings: "Hey man, is me! aaa aaaaaaaaaaaaaaaaaaaaa aaaaaaaaaaaaa aaa aaaaaaaaaaaaa",
-        },
-    ]
-
     const [alert, setAlert] = useState(null)
     const [requests, setRequests] = useState([])
     const [requestsCounter, setRequestsCounter] = useState(0)
 
     useEffect(() => {
-        setRequests(requestsData)
-        setRequestsCounter(requestsData.length)
+        fetchFriendRequests()
     }, [])
+
+    const fetchFriendRequests = async () => {
+        const response = await getFriendRequests()
+        if (!response.success) { return }
+        setRequests(response.data)
+        setRequestsCounter(response.data.length)
+    }
 
     const handleAccept = (id) => {
         setAlert({ success: true, message: "Accepted" + id })
@@ -56,13 +45,13 @@ function Requests() {
                     return (
                         <div className={`${styles.request}`}>
                             <div className={`${styles.profile}`}>
-                                <img src={request.picture} alt="" />
+                                <img src={getPictureUrl(request.profile.picture)} alt="" />
                                 <div>
                                     <div>
-                                        <p>{request.username} <span>#{request.code}</span></p>
-                                        <span>{request.sended_on}</span>
+                                        <p>{request.profile.username} <span>#{request.profile.code}</span></p>
+                                        <span>{parseDateTime(request.requested_at)}</span>
                                     </div>
-                                    <span>{request.greatings.length > 50 ? request.greatings.slice(0, 50) + " ..." : request.greatings}</span>
+                                    <span>{request.greetings.length > 50 ? request.greetings.slice(0, 50) + " ..." : request.greetings}</span>
                                 </div>
                             </div>
                             <div className={`${styles.actions}`}>
