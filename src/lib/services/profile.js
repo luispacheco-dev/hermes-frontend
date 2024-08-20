@@ -168,3 +168,28 @@ export async function getFriendRequests() {
     const data = await response.json()
     return { success: true, data: data }
 }
+
+export async function deleteFriendRequest(rid) {
+    const pid = getProfileId()
+    const url = `${PROFILE_BASE}/${pid}/friend-requests/${rid}/`
+
+    const accessToken = await getAccess()
+    const authorization = `Bearer ${accessToken}`
+
+    const response = await fetch(url, {
+        method: "DELETE",
+        headers: { Authorization: authorization }
+    }).catch((error) => error)
+
+    if (response.status === 500) {
+        return { success: false, error: "Internal Error" }
+    }
+    if (response.status === 400) {
+        return { success: false, error: "Profile/Friend Request Doesn't Exist" }
+    }
+    if (response.status !== 200) {
+        return { success: false, error: "Something Goes Wrong" }
+    }
+
+    return { success: true, data: "" }
+}
