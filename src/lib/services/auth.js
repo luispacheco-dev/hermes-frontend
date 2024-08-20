@@ -32,4 +32,37 @@ export async function login(payload) {
     return { success: true, data: data }
 }
 
+export async function verify(token) {
+    const url = `${AUTH_BASE}/token/verify/`
+
+    const response = await fetch(url, {
+        method: "POST",
+        body: JSON.stringify({ token: token }),
+        headers: { "Content-Type": "application/json" },
+    }).catch((error) => error)
+
+    if (response.status !== 200) {
+        return false
+    }
+
+    return true
+}
+
+export async function refreshAccess(token) {
+    const url = `${AUTH_BASE}/token/refresh/`
+
+    const response = await fetch(url, {
+        method: "POST",
+        body: JSON.stringify({ refresh: token }),
+        headers: { "Content-Type": "application/json" },
+    }).catch((error) => error)
+
+    if (response.status !== 200) {
+        return { success: false }
+    }
+
+    const data = await response.json()
+    return { success: true, data: data }
+}
+
 export default [login]
