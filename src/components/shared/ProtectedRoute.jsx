@@ -16,15 +16,19 @@ function ProtectedRoute() {
     const [isAuthenticated, setIsAuthenticated] = useState(false)
 
     useEffect(() => {
-        const access = getAccess()
+        handleAuthorization()
+    }, [])
+
+    const handleAuthorization = async () => {
+        const access = await getAccess()
         setIsLoading(false)
         setIsAuthenticated(access ? access : false)
-    }, [])
+    }
 
     if (isLoading) {
         return <></>
     }
-    return isAuthenticated ? <Outlet /> : <Navigate to="/login" replace />
+    return isAuthenticated ? <Outlet /> : <Navigate to="/logout" replace />
 }
 
 export default ProtectedRoute
