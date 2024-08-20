@@ -4,7 +4,7 @@ import Alert from "../shared/Alert.jsx"
 import styles from "./Requests.module.css"
 import { parseDateTime } from "../../lib/utils.js"
 import { getPictureUrl } from "../../lib/utils.js"
-import { getFriendRequests } from "../../lib/services/profile.js"
+import { deleteFriendRequest, getFriendRequests } from "../../lib/services/profile.js"
 
 /*
  * Requests page
@@ -33,8 +33,20 @@ function Requests() {
     const handleAccept = (id) => {
         setAlert({ success: true, message: "Accepted" + id })
     }
-    const handleReject = (id) => {
-        setAlert({ success: false, message: "Rejected" + id })
+    const handleReject = async (id) => {
+        let message = ""
+        const response = await deleteFriendRequest(id)
+
+        if (!response.success) {
+            message = response.error
+        } else {
+            message = "Friend Request Deleted"
+            const filteredFriendRequests = requests.filter((request) => request.id !== id)
+            setRequests(filteredFriendRequests)
+            setRequestsCounter(filteredFriendRequests.length)
+        }
+
+        setAlert({ success: response.success, message: message })
     }
 
     return (
