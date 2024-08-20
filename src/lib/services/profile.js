@@ -116,3 +116,29 @@ export async function updateProfile(formData) {
     const data = await response.json()
     return { success: true, data: data }
 }
+
+export async function getChats() {
+    const id = getProfileId()
+    const url = `${PROFILE_BASE}/${id}/chats/`
+
+    const accessToken = await getAccess()
+    const authorization = `Bearer ${accessToken}`
+
+    const response = await fetch(url, {
+        headers: { Authorization: authorization }
+    }).catch((error) => error)
+
+    if (response.status === 500) {
+        return { success: false, error: "Internal Error" }
+    }
+    if (response.status === 400) {
+        return { success: false, error: "Profile Doesn't Exist" }
+    }
+    if (response.status !== 200) {
+        console.log(await response.json())
+        return { success: false, error: "Something goes wrong" }
+    }
+
+    const data = await response.json()
+    return { success: true, data: data }
+}
