@@ -2,7 +2,8 @@ import { useEffect, useState } from "react"
 import styles from "./ChatList.module.css"
 import ChatListItem from "./ChatListItem.jsx"
 import Searchbar from "../shared/Searchbar.jsx"
-import ProfilePic from "../../assets/sample.png"
+import { getPictureUrl } from "../../lib/utils.js"
+import { getChats } from "../../lib/services/profile.js"
 
 /*
  * Chat list component
@@ -14,41 +15,22 @@ import ProfilePic from "../../assets/sample.png"
 
 function ChatList({ onClick }) {
 
-    const dumbChatsData = [
-        {
-            id: 1,
-            username: "Luis Enrique Pacheco Torres",
-            message: {
-                sended_on: "9:30 PM",
-                content: "Hello man"
-            },
-            active: true,
-            picture: ProfilePic,
-            nonReadMessages: 10
-        },
-        {
-            id: 2,
-            username: "John Smith",
-            message: {
-                sended_on: "7:30 PM",
-                content: "Hello man, How are you aaasjhjssis skshdnj, aikjdij aksk, kjkdjijs, kjsijd ksjiosj"
-            },
-            active: false,
-            picture: ProfilePic,
-            nonReadMessages: 0
-        },
-    ]
-
     const [query, setQuery] = useState("")
     const [chats, setChats] = useState([])
     const [filteredChats, setFilteredChats] = useState([])
     const [onlineChatsCounter, setOnlineChatsCounter] = useState(0)
 
     useEffect(() => {
-        setChats(dumbChatsData)
-        setFilteredChats(dumbChatsData)
-        setOnlineChatsCounter(dumbChatsData.filter((chat) => chat.active).length)
+        fetchChats()
     }, [])
+
+    const fetchChats = async () => {
+        const response = await getChats()
+        if (!response.success) { return }
+        setChats(response.data)
+        setFilteredChats(response.data)
+        setOnlineChatsCounter(response.data.filter((chat) => chat.logged).length)
+    }
 
     const onChangeQuery = (query) => {
         setQuery(query)
@@ -68,11 +50,11 @@ function ChatList({ onClick }) {
                         id={chat.id}
                         key={chat.id}
                         onClick={onClick}
-                        active={chat.active}
-                        picture={chat.picture}
-                        message={chat.message}
-                        username={chat.username}
-                        nonReadMessages={chat.nonReadMessages} />
+                        active={chat.logged}
+                        picture={getPictureUrl(chat.profile.picture)}
+                        message={chat.last_message}
+                        username={chat.profile.username}
+                        nonReadMessages={chat.nrm} />
                 })}
             </div>
         </div>

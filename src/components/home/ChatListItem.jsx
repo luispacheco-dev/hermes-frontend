@@ -22,7 +22,7 @@ function ChatListItem({ id, username, picture, active, message, onClick, nonRead
                 <div>
                     <div className={`${styles.message_sender}`}>
                         <span>{username}</span>
-                        <span>{message.sended_on}</span>
+                        <span>{message.created_at}</span>
                     </div>
                     <div className={`${styles.message_content}`}>
                         <span className={`${nonReadMessages !== 0 ? styles.focus : ""}`}>
