@@ -29,7 +29,7 @@ function ChatList({ onClick }) {
         if (!response.success) { return }
         setChats(response.data)
         setFilteredChats(response.data)
-        setOnlineChatsCounter(response.data.filter((chat) => chat.logged).length)
+        setOnlineChatsCounter(response.data.filter((chat) => chat.profile.logged).length)
     }
 
     const onChangeQuery = (query) => {
@@ -50,7 +50,7 @@ function ChatList({ onClick }) {
                         id={chat.id}
                         key={chat.id}
                         onClick={onClick}
-                        active={chat.logged}
+                        active={chat.profile.logged}
                         picture={getPictureUrl(chat.profile.picture)}
                         message={chat.last_message}
                         username={chat.profile.username}
