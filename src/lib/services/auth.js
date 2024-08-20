@@ -32,19 +32,4 @@ export async function login(payload) {
     return { success: true, data: data }
 }
 
-export async function logout() {
-    const url = `${AUTH_BASE}/logout/`
-
-    const accessToken = getAccess()
-    const headers = { Authorization: `Bearer ${getAccess()}` }
-
-    const response = await fetch(url, { headers: headers }).catch((error) => error)
-
-    if (response.status !== 200) {
-        return { success: false, error: "Somenthing goes wrong" }
-    }
-
-    return { success: true, data: "Logout" }
-}
-
 export default [login]
