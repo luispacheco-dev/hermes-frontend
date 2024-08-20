@@ -1,11 +1,11 @@
-import { useState } from "react"
 import styles from "./Navbar.module.css"
-import ProfilePic from "../../assets/sample.png"
+import { useEffect, useState } from "react"
 import LogoutIcon from "../../assets/logout.svg"
 import RequestsIcon from "../../assets/inbox.svg"
 import FriendsIcon from "../../assets/friends.svg"
 import ProfileIcon from "../../assets/profile.svg"
 import DropdownIcon from "../../assets/dropdown.svg"
+import { getProfile } from "../../lib/services/profile"
 
 /*
  * Nav bar component
@@ -16,13 +16,19 @@ import DropdownIcon from "../../assets/dropdown.svg"
 
 function Navbar() {
 
-    const dumbProfileData = {
-        picture: ProfilePic,
-        username: "Luis Enrique Pacheco Torres"
-    }
-
+    const [profile, setProfile] = useState({})
     const [showMenu, setShowMenu] = useState(false)
     const toggleMenu = () => { setShowMenu(!showMenu) }
+
+    useEffect(() => {
+        fetchProfile()
+    }, [])
+
+    const fetchProfile = async () => {
+        const response = await getProfile()
+        if (!response.success) { return }
+        setProfile(response.data)
+    }
 
     return (
         <nav className={`${styles.nav}`}>
@@ -39,8 +45,8 @@ function Navbar() {
             </ul>
             <div className={`${styles.profile_data} ${!showMenu ? styles.collapse : ""}`}>
                 <div onClick={toggleMenu}>
-                    <img src={dumbProfileData.picture} alt="" />
-                    <span>Hi, {dumbProfileData.username.split(" ")[0]}</span>
+                    <img src={profile.picture} alt="" />
+                    <span>Hi, {profile.first_name}</span>
                     <img className={`${showMenu ? styles.rotate : ""}`} src={DropdownIcon} alt="" />
                 </div>
                 <ul>
