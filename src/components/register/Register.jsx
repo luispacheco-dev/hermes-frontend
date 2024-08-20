@@ -28,6 +28,7 @@ function Register() {
             return
         }
 
+        event.target.reset()
         setAlert({ success: response.success, message: response.data })
     }
 
