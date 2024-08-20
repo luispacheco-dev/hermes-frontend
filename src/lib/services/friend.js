@@ -35,3 +35,36 @@ export async function sendFriendRequest(code, greetings) {
 
     return { success: true, data: "" }
 }
+
+export async function acceptFriendRequest(sid) {
+    const rid = getProfileId()
+    const url = `${FRIEND_BASE}/`
+
+    const accessToken = await getAccess()
+    const authorization = `Bearer ${accessToken}`
+
+    const payload = {
+        sender: sid,
+        receiver: rid
+    }
+    const response = await fetch(url, {
+        method: "POST",
+        body: JSON.stringify(payload),
+        headers: {
+            Authorization: authorization,
+            "Content-Type": "application/json"
+        }
+    }).catch((error) => error)
+
+    if (response.status === 500) {
+        return { success: false, error: "Internal Error" }
+    }
+    if (response.status === 400) {
+        return { success: false, error: "Friend Already Exist" }
+    }
+    if (response.status !== 201) {
+        return { success: false, error: "Something Goes Wrong" }
+    }
+
+    return { success: true, data: "" }
+}
