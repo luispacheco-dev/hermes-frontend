@@ -68,3 +68,27 @@ export async function acceptFriendRequest(sid) {
 
     return { success: true, data: "" }
 }
+
+export async function deleteFriend(id) {
+    const url = `${FRIEND_BASE}/${id}/`
+
+    const accessToken = await getAccess()
+    const authorization = `Bearer ${accessToken}`
+
+    const response = await fetch(url, {
+        method: "DELETE",
+        headers: { Authorization: authorization }
+    }).catch((error) => error)
+
+    if (response.status === 500) {
+        return { success: false, error: "Internal Error" }
+    }
+    if (response.status === 400) {
+        return { success: false, error: "Friend Doesn't Exist" }
+    }
+    if (response.status !== 200) {
+        return { success: false, error: "Something Goes Wrong" }
+    }
+
+    return { success: true, data: "" }
+}
