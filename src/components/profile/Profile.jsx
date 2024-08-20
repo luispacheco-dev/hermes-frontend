@@ -1,6 +1,8 @@
 import styles from "./Profile.module.css"
 import { useEffect, useState } from "react"
-import ProfilePic from "../../assets/sample.png"
+import { getPictureUrl } from "../../lib/utils.js"
+import { getProfile } from "../../lib/services/profile.js"
+import { updateProfile } from "../../lib/services/profile.js"
 
 /*
  * Profile page
@@ -11,28 +13,43 @@ import ProfilePic from "../../assets/sample.png"
 
 function Profile() {
 
-    const profileData = {
-        id: 1,
-        picture: ProfilePic,
-        first_name: "Luis Enrique",
-        last_name: "Pacheco Torres"
-    }
-
     const [profile, setProfile] = useState({})
 
     useEffect(() => {
-        setProfile(profileData)
+        fetchProfile()
     }, [])
+
+    const fetchProfile = async () => {
+        const response = await getProfile()
+        if (!response.success) { return }
+        setProfile(response.data)
+    }
+
+    const handleSubmit = async (e) => {
+        e.preventDefault()
+        const formData = new FormData(e.target)
+        const response = await updateProfile(formData)
+        if (!response.success) { return }
+        window.location.reload()
+    }
+
+    const handleLastName = (e) => {
+        setProfile({ ...profile, last_name: e.target.value })
+    }
+
+    const handleFirstName = (e) => {
+        setProfile({ ...profile, first_name: e.target.value })
+    }
 
     return (
         <div className={`${styles.div}`}>
-            <form className={`${styles.form}`}>
+            <form className={`${styles.form}`} onSubmit={(e) => handleSubmit(e)}>
                 <div>
-                    <img src={profile.picture} alt="" />
+                    <img src={getPictureUrl(profile.picture)} alt="" />
                     <input type="file" name="picture" />
                 </div>
-                <input type="text" value={profile.first_name} name="first_name" />
-                <input type="text" value={profile.last_name} name="last_name" />
+                <input type="text" value={profile.first_name} name="first_name" onChange={(e) => handleFirstName(e)} />
+                <input type="text" value={profile.last_name} name="last_name" onChange={(e) => handleLastName(e)} />
                 <button type="submit">Update</button>
             </form>
         </div>
