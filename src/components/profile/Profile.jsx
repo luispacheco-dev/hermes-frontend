@@ -45,6 +45,7 @@ function Profile() {
         <div className={`${styles.div}`}>
             <form className={`${styles.form}`} onSubmit={(e) => handleSubmit(e)}>
                 <div>
+                    <span>Friend Code: {profile.code}</span>
                     <img src={getPictureUrl(profile.picture)} alt="" />
                     <input type="file" name="picture" />
                 </div>
