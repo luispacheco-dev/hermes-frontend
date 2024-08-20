@@ -4,6 +4,7 @@ import Alert from "../shared/Alert.jsx"
 import styles from "./Requests.module.css"
 import { parseDateTime } from "../../lib/utils.js"
 import { getPictureUrl } from "../../lib/utils.js"
+import { acceptFriendRequest } from "../../lib/services/friend.js"
 import { deleteFriendRequest, getFriendRequests } from "../../lib/services/profile.js"
 
 /*
@@ -30,8 +31,20 @@ function Requests() {
         setRequestsCounter(response.data.length)
     }
 
-    const handleAccept = (id) => {
-        setAlert({ success: true, message: "Accepted" + id })
+    const handleAccept = async (id, pid) => {
+        let message = ""
+        const response = await acceptFriendRequest(pid)
+
+        if (!response.success) {
+            message = response.error
+        } else {
+            message = "Friend Request Accepted"
+            const filteredFriendRequests = requests.filter((request) => request.id !== id)
+            setRequests(filteredFriendRequests)
+            setRequestsCounter(filteredFriendRequests.length)
+        }
+
+        setAlert({ success: response.success, message: message })
     }
     const handleReject = async (id) => {
         let message = ""
@@ -67,7 +80,7 @@ function Requests() {
                                 </div>
                             </div>
                             <div className={`${styles.actions}`}>
-                                <button onClick={() => handleAccept(request.id)}>Accept</button>
+                                <button onClick={() => handleAccept(request.id, request.profile.id)}>Accept</button>
                                 <button onClick={() => handleReject(request.id)}>Reject</button>
                             </div>
                         </div>
