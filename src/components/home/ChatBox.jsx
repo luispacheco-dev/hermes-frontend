@@ -1,9 +1,10 @@
 import styles from "./ChatBox.module.css"
 import MenuIcon from "../../assets/menu.svg"
 import ArrowBackIcon from "../../assets/back.svg"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { getPictureUrl } from "../../lib/utils"
 import { parseDateTime } from "../../lib/utils"
+import { getChatMessages } from "../../lib/services/chat"
 
 /*
  * Chat box component (chat)
@@ -17,6 +18,16 @@ import { parseDateTime } from "../../lib/utils"
 function ChatBox({ chat, onBack }) {
 
     const [messages, setMessages] = useState([])
+
+    useEffect(() => {
+        fetchMessages()
+    }, [])
+
+    const fetchMessages = async () => {
+        const response = await getChatMessages(chat.id)
+        if (!response.success) { return }
+        setMessages(response.data)
+    }
 
     return (
         <div className={`${styles.div}`}>
