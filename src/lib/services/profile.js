@@ -35,7 +35,7 @@ export async function updateLogged(logged) {
     const id = getProfileId()
     const url = `${PROFILE_BASE}/${id}/logged/`
 
-    const accessToken = getAccess()
+    const accessToken = await getAccess()
     const authorization = `Bearer ${accessToken}`
 
     const response = await fetch(url, {
