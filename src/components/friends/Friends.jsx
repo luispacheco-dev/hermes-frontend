@@ -6,11 +6,13 @@ import styles from "./Friends.module.css"
 import AddIcon from "../../assets/add.svg"
 import ChatIcon from "../../assets/chat.svg"
 import DeleteFriend from "./DeleteFriend.jsx"
+import { useNavigate } from "react-router-dom"
 import Searchbar from "../shared/Searchbar.jsx"
 import DeleteIcon from "../../assets/delete.svg"
 import { parseDateTime } from "../../lib/utils.js"
 import { getPictureUrl } from "../../lib/utils.js"
 import { getFriends } from "../../lib/services/profile.js"
+import { createChat } from "../../lib/services/chat.js"
 
 /*
  * Friends page
@@ -28,6 +30,8 @@ function Friends() {
     const [filteredFriends, setFilteredFriends] = useState([])
     const [selectedFriend, setSelectedFriend] = useState(null)
     const [showAddFriendForm, setShowAddFriendForm] = useState(false)
+
+    const navigate = useNavigate()
 
     useEffect(() => {
         fetchFriends()
@@ -59,6 +63,15 @@ function Friends() {
         setFriendsCounter(mFriends.length)
     }
 
+    const onChatClick = async (id) => {
+        const response = await createChat(id)
+        if (!response.success) {
+            setAlert({ success: false, message: response.error })
+            return
+        }
+        navigate("/")
+    }
+
     return (
         <div className={`${styles.div}`}>
             <div>
@@ -81,7 +94,7 @@ function Friends() {
                                 </div>
                             </div>
                             <div className={`${styles.actions}`}>
-                                <img src={ChatIcon} alt="" onClick={() => { }} />
+                                <img src={ChatIcon} alt="" onClick={() => onChatClick(friend.id)} />
                                 <img src={DeleteIcon} alt="" onClick={() => onDeleteFriend(friend)} />
                             </div>
                         </div>
