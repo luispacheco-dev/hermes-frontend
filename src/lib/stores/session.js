@@ -36,4 +36,8 @@ export function getAccess() {
     return localStorage.getItem("access")
 }
 
+export function getProfileId() {
+    return localStorage.getItem("profile_id")
+}
+
 export default [getAccess, setSession, clearSession]
