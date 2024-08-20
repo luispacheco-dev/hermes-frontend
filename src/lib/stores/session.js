@@ -1,3 +1,5 @@
+import { verify } from "../services/auth.js"
+import { refreshAccess } from "../services/auth.js"
 /*
  * setSession
  *
@@ -32,8 +34,24 @@ export function clearSession() {
  * @returns {string} The access token
  */
 
-export function getAccess() {
-    return localStorage.getItem("access")
+export async function getAccess() {
+    let access = localStorage.getItem("access")
+    if (!access) { return null }
+    if (await verify(access)) { return access }
+    const refresh = await getRefresh()
+    if (!refresh) { return null }
+    const response = await refreshAccess(refresh)
+    if (!response.success) { return null }
+    access = response.data.access
+    localStorage.setItem("access", access)
+    return access
+}
+
+export async function getRefresh() {
+    const refresh = localStorage.getItem("refresh")
+    if (!refresh) { return null }
+    if (await verify(refresh)) { return refresh }
+    return null
 }
 
 export function getProfileId() {
