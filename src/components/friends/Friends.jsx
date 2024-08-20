@@ -4,6 +4,7 @@ import Alert from "../shared/Alert.jsx"
 import AddFriend from "./AddFriend.jsx"
 import styles from "./Friends.module.css"
 import AddIcon from "../../assets/add.svg"
+import ChatIcon from "../../assets/chat.svg"
 import DeleteFriend from "./DeleteFriend.jsx"
 import Searchbar from "../shared/Searchbar.jsx"
 import DeleteIcon from "../../assets/delete.svg"
@@ -80,6 +81,7 @@ function Friends() {
                                 </div>
                             </div>
                             <div className={`${styles.actions}`}>
+                                <img src={ChatIcon} alt="" onClick={() => { }} />
                                 <img src={DeleteIcon} alt="" onClick={() => onDeleteFriend(friend)} />
                             </div>
                         </div>
