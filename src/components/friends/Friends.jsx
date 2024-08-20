@@ -4,11 +4,12 @@ import Alert from "../shared/Alert.jsx"
 import AddFriend from "./AddFriend.jsx"
 import styles from "./Friends.module.css"
 import AddIcon from "../../assets/add.svg"
-import DeleteFrienda from "./DeleteFriend.jsx"
-import Searchbar from "../shared/Searchbar.jsx"
-import ProfilePic from "../../assets/sample.png"
-import DeleteIcon from "../../assets/delete.svg"
 import DeleteFriend from "./DeleteFriend.jsx"
+import Searchbar from "../shared/Searchbar.jsx"
+import DeleteIcon from "../../assets/delete.svg"
+import { parseDateTime } from "../../lib/utils.js"
+import { getPictureUrl } from "../../lib/utils.js"
+import { getFriends } from "../../lib/services/profile.js"
 
 /*
  * Friends page
@@ -19,23 +20,6 @@ import DeleteFriend from "./DeleteFriend.jsx"
 
 function Friends() {
 
-    const dumbFriendsData = [
-        {
-            id: 1,
-            code: "KAIL9875",
-            picture: ProfilePic,
-            begin_on: "05/02/2024",
-            username: "Luis Enrique Pacheco Torres",
-        },
-        {
-            id: 2,
-            code: "K9875IQO",
-            picture: ProfilePic,
-            begin_on: "04/02/2024",
-            username: "John Smith",
-        },
-    ]
-
     const [query, setQuery] = useState("")
     const [alert, setAlert] = useState(null)
     const [friends, setFriends] = useState([])
@@ -45,10 +29,16 @@ function Friends() {
     const [showAddFriendForm, setShowAddFriendForm] = useState(false)
 
     useEffect(() => {
-        setFriends(dumbFriendsData)
-        setFilteredFriends(dumbFriendsData)
-        setFriendsCounter(dumbFriendsData.length)
+        fetchFriends()
     }, [])
+
+    const fetchFriends = async () => {
+        const response = await getFriends()
+        if (!response.success) { return }
+        setFriends(response.data)
+        setFilteredFriends(response.data)
+        setFriendsCounter(response.data.length)
+    }
 
     const onChangeQuery = (query) => {
         setQuery(query)
@@ -58,7 +48,7 @@ function Friends() {
         setFilteredFriends(friends.filter((friend) => friend.username.startsWith(query)))
     }
 
-    const onDeleteFriend = (friend) => setSelectedFriend(friend)
+    const onDeleteFriend = (friend) => setSelectedFriend(friend.profile)
     const toggleAddFriendForm = () => setShowAddFriendForm(!showAddFriendForm)
 
     return (
@@ -73,13 +63,13 @@ function Friends() {
                     return (
                         <div key={friend.id}>
                             <div className={`${styles.profile}`}>
-                                <img src={friend.picture} alt="" />
+                                <img src={getPictureUrl(friend.profile.picture)} alt="" />
                                 <div>
                                     <div>
-                                        <span>{friend.username}</span>
-                                        <span>{friend.begin_on}</span>
+                                        <span>{friend.profile.username}</span>
+                                        <span>{parseDateTime(friend.began_at)}</span>
                                     </div>
-                                    <span>Code: {friend.code}</span>
+                                    <span>Code: {friend.profile.code}</span>
                                 </div>
                             </div>
                             <div className={`${styles.actions}`}>
