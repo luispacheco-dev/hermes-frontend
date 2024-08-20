@@ -1,5 +1,6 @@
 import styles from "./Navbar.module.css"
 import { useEffect, useState } from "react"
+import { getPictureUrl } from "../../lib/utils"
 import LogoutIcon from "../../assets/logout.svg"
 import RequestsIcon from "../../assets/inbox.svg"
 import FriendsIcon from "../../assets/friends.svg"
@@ -27,6 +28,7 @@ function Navbar() {
     const fetchProfile = async () => {
         const response = await getProfile()
         if (!response.success) { return }
+        console.log(response.data)
         setProfile(response.data)
     }
 
@@ -45,7 +47,7 @@ function Navbar() {
             </ul>
             <div className={`${styles.profile_data} ${!showMenu ? styles.collapse : ""}`}>
                 <div onClick={toggleMenu}>
-                    <img src={profile.picture} alt="" />
+                    <img src={getPictureUrl(profile.picture)} alt="" />
                     <span>Hi, {profile.first_name}</span>
                     <img className={`${showMenu ? styles.rotate : ""}`} src={DropdownIcon} alt="" />
                 </div>
