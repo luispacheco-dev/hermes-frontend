@@ -48,8 +48,15 @@ function Friends() {
         setFilteredFriends(friends.filter((friend) => friend.username.startsWith(query)))
     }
 
-    const onDeleteFriend = (friend) => setSelectedFriend(friend.profile)
+    const onDeleteFriend = (friend) => setSelectedFriend(friend)
     const toggleAddFriendForm = () => setShowAddFriendForm(!showAddFriendForm)
+
+    const onDeleteFriendSuccess = (id) => {
+        const mFriends = friends.filter((friend) => friend.id !== id)
+        setFriends(mFriends)
+        setFilteredFriends(mFriends)
+        setFriendsCounter(mFriends.length)
+    }
 
     return (
         <div className={`${styles.div}`}>
@@ -81,7 +88,11 @@ function Friends() {
             </div>
             {showAddFriendForm && <AddFriend onClick={toggleAddFriendForm} setResponse={setAlert} />}
             {alert && <Alert message={alert.message} success={alert.success} onDismiss={() => setAlert(null)} />}
-            {selectedFriend && <DeleteFriend friend={selectedFriend} setResponse={setAlert} onDismiss={() => setSelectedFriend(null)} />}
+            {selectedFriend && <DeleteFriend
+                friend={selectedFriend}
+                setResponse={setAlert}
+                onSuccess={onDeleteFriendSuccess}
+                onDismiss={() => setSelectedFriend(null)} />}
         </div>
     )
 }
