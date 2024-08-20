@@ -1,5 +1,7 @@
 import CloseIcon from "../../assets/add.svg"
 import styles from "./DeleteFriend.module.css"
+import { getPictureUrl } from "../../lib/utils"
+import { deleteFriend } from "../../lib/services/friend"
 
 /*
  * Delete friend component
@@ -11,10 +13,19 @@ import styles from "./DeleteFriend.module.css"
  * @returns {JSX.Element} The rendered Delete friend component
  */
 
-function DeleteFriend({ friend, onDismiss, setResponse }) {
+function DeleteFriend({ friend, onDismiss, setResponse, onSuccess }) {
 
-    const handleDelete = () => {
-        setResponse({ success: true, message: "Deleted" })
+    const handleDelete = async (id) => {
+        let message = ""
+        const response = await deleteFriend(id)
+
+        if (!response.success) {
+            message = response.error
+        } else {
+            message = "Friend Deleted"
+            onSuccess(id)
+        }
+        setResponse({ success: response.success, message: message })
         onDismiss()
     }
 
@@ -26,13 +37,13 @@ function DeleteFriend({ friend, onDismiss, setResponse }) {
                     <img src={CloseIcon} alt="" onClick={onDismiss} />
                 </div>
                 <div className={`${styles.friend}`}>
-                    <img src={friend.picture} alt="" />
+                    <img src={getPictureUrl(friend.profile.picture)} alt="" />
                     <div>
-                        <span>{friend.username}</span>
+                        <span>{friend.profile.username}</span>
                     </div>
                 </div>
                 <div className={`${styles.actions}`}>
-                    <button onClick={handleDelete}>Delete</button>
+                    <button onClick={() => handleDelete(friend.id)}>Delete</button>
                 </div>
             </div>
         </div>
