@@ -1,7 +1,7 @@
 import { useEffect } from "react"
 import { Navigate } from "react-router-dom"
-import { logout } from "../../lib/services/auth"
 import { clearSession } from "../../lib/stores/session"
+import { updateLogged } from "../../lib/services/profile.js"
 
 /*
  * Logout page
@@ -18,7 +18,7 @@ function Logout() {
     }, [])
 
     const handleLogout = async () => {
-        const response = await logout()
+        const response = await updateLogged(false)
         if (!response.success) { console.log(response.error) }
     }
 
