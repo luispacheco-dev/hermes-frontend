@@ -1,7 +1,9 @@
 import styles from "./ChatBox.module.css"
 import MenuIcon from "../../assets/menu.svg"
-import ProfilePic from "../../assets/sample.png"
 import ArrowBackIcon from "../../assets/back.svg"
+import { useState } from "react"
+import { getPictureUrl } from "../../lib/utils"
+import { parseDateTime } from "../../lib/utils"
 
 /*
  * Chat box component (chat)
@@ -12,48 +14,20 @@ import ArrowBackIcon from "../../assets/back.svg"
  * @returns {JSX.Element} The rendered Chat box component
  */
 
-function ChatBox({ chatId, onBack }) {
+function ChatBox({ chat, onBack }) {
 
-    const userId = 1
-
-    const chat = {
-        id: 1,
-        picture: ProfilePic,
-        active: true,
-        lastConnection: "9:30 PM",
-        username: "Luis Enrique Pacheco Torres",
-        messages: [
-            {
-                id: 1,
-                sender_id: 1,
-                content: "Hello man, How are you?",
-                sended_on: "9:30 PM"
-            },
-            {
-                id: 2,
-                sender_id: 2,
-                content: "Hello man!, Great and you how are you being?",
-                sended_on: "9:35 PM"
-            },
-            {
-                id: 3,
-                sender_id: 1,
-                content: "Great thanks",
-                sended_on: "9:40 PM"
-            },
-        ],
-    }
+    const [messages, setMessages] = useState([])
 
     return (
         <div className={`${styles.div}`}>
             <div className={`${styles.toolbar}`}>
                 <div className={`${styles.profile}`}>
                     <img src={ArrowBackIcon} alt="" onClick={onBack} />
-                    <img src={chat.picture} alt="" />
+                    <img src={getPictureUrl(chat.profile.picture)} alt="" />
                     <div>
-                        <span>{chat.username}</span>
-                        <span className={`${chat.active ? styles.active : styles.non_active}`}>
-                            {chat.active ? "Online" : chat.lastConnection + " last connection"}
+                        <span>{chat.profile.username}</span>
+                        <span className={`${chat.profile.logged ? styles.active : styles.non_active}`}>
+                            {chat.profile.logged ? "Online" : parseDateTime(chat.profile.last_login) + " last connection"}
                         </span>
                     </div>
                 </div>
@@ -62,7 +36,7 @@ function ChatBox({ chatId, onBack }) {
                 </div>
             </div>
             <div className={`${styles.messages}`}>
-                {chat.messages.map((message) => {
+                {messages.map((message) => {
                     return (
                         <div className={`${message.sender_id === userId ? styles.from_current_user : ""}`}>
                             <span>{message.content}</span>

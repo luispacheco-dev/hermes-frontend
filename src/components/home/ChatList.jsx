@@ -47,13 +47,12 @@ function ChatList({ onClick }) {
             <div className={`${styles.chat_list}`}>
                 {filteredChats.map((chat) => {
                     return <ChatListItem
-                        id={chat.id}
                         key={chat.id}
-                        onClick={onClick}
                         active={chat.profile.logged}
                         picture={getPictureUrl(chat.profile.picture)}
                         message={chat.last_message}
                         username={chat.profile.username}
+                        onClick={() => onClick(chat)}
                         nonReadMessages={chat.nrm} />
                 })}
             </div>

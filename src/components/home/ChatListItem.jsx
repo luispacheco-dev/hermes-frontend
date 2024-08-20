@@ -1,3 +1,4 @@
+import { useState } from "react"
 import styles from "./ChatListItem.module.css"
 
 /*
@@ -14,10 +15,10 @@ import styles from "./ChatListItem.module.css"
  * @returns {JSX.Element} The rendered Chat list item component
  */
 
-function ChatListItem({ id, username, picture, active, message, onClick, nonReadMessages }) {
+function ChatListItem({ username, picture, active, message, onClick, nonReadMessages }) {
     return (
-        <div className={`${styles.div}`} onClick={() => onClick(id)}>
-            <div className={`${styles.chat_data}`}>
+        <div className={`${styles.div}`}>
+            <div className={`${styles.chat_data}`} onClick={() => onClick()}>
                 <img src={picture} alt="" />
                 <div>
                     <div className={`${styles.message_sender}`}>

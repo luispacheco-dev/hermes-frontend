@@ -12,19 +12,19 @@ import styles from "./Home.module.css"
 
 function Home() {
 
-    const [currentChatId, setCurrentChatId] = useState(0)
+    const [currentChat, setCurrentChat] = useState(null)
 
-    const onClickChat = (id) => {
-        setCurrentChatId(id)
+    const onClickChat = (chat) => {
+        setCurrentChat(chat)
     }
     const resetCurrentChat = () => {
-        setCurrentChatId(0)
+        setCurrentChat(null)
     }
 
     return (
         <div className={`${styles.div}`}>
-            {currentChatId === 0 && <ChatList onClick={onClickChat} />}
-            {currentChatId !== 0 && <ChatBox chatId={currentChatId} onBack={resetCurrentChat} />}
+            {!currentChat && <ChatList onClick={onClickChat} />}
+            {currentChat && <ChatBox chat={currentChat} onBack={resetCurrentChat} />}
         </div>
     )
 }
