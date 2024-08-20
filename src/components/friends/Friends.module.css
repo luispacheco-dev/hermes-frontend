@@ -81,9 +81,10 @@
 }
 
 .actions {
+    gap: 10px;
     display: flex;
-    flex-flow: column;
-    justify-content: center !important;
+    flex-flow: row;
+    align-items: center;
 }
 
 .actions img:hover {
