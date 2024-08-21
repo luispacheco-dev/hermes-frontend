@@ -4,6 +4,7 @@ import ArrowBackIcon from "../../assets/back.svg"
 import { useEffect, useState } from "react"
 import { getPictureUrl } from "../../lib/utils"
 import { parseDateTime } from "../../lib/utils"
+import { readMessages } from "../../lib/services/chat"
 import { getChatMessages, sendMessage } from "../../lib/services/chat"
 
 /*
@@ -21,12 +22,19 @@ function ChatBox({ chat, onBack }) {
 
     useEffect(() => {
         fetchMessages()
+        handleReadMessages()
     }, [])
 
     const fetchMessages = async () => {
         const response = await getChatMessages(chat.id)
         if (!response.success) { return }
         setMessages(response.data)
+    }
+
+    const handleReadMessages = async () => {
+        if (chat.nrm === 0) { return }
+        const response = await readMessages(chat.id)
+        if (!response.success) { return }
     }
 
     const handleSumbit = async (e) => {
@@ -60,7 +68,7 @@ function ChatBox({ chat, onBack }) {
             <div className={`${styles.messages}`}>
                 {messages.map((message) => {
                     return (
-                        <div className={`${message.sender !== chat.profile.id ? styles.from_current_user : ""}`}>
+                        <div key={message.id} className={`${message.sender !== chat.profile.id ? styles.from_current_user : ""}`}>
                             <span>{message.content}</span>
                             <span>{parseDateTime(message.created_at)}</span>
                         </div>
