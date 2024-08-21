@@ -6,6 +6,7 @@ import { getPictureUrl } from "../../lib/utils"
 import { parseDateTime } from "../../lib/utils"
 import { readMessages } from "../../lib/services/chat"
 import { getChatMessages, sendMessage } from "../../lib/services/chat"
+import { getProfileId } from "../../lib/stores/session"
 
 /*
  * Chat box component (chat)
@@ -19,10 +20,14 @@ import { getChatMessages, sendMessage } from "../../lib/services/chat"
 function ChatBox({ chat, onBack }) {
 
     const [messages, setMessages] = useState([])
+    const [websocket, setWebsocket] = useState({})
 
     useEffect(() => {
         fetchMessages()
         handleReadMessages()
+
+        const socket = new WebSocket('ws://127.0.0.1:8000/ws/chat/' + chat.id + '/')
+        setWebsocket(socket)
     }, [])
 
     const fetchMessages = async () => {
@@ -41,11 +46,22 @@ function ChatBox({ chat, onBack }) {
         e.preventDefault()
         const data = Object.fromEntries(new FormData(e.target))
 
-        const response = await sendMessage(chat.id, data.content)
-        if (!response.success) { return }
-
+        const payload = {
+            chat: chat.id,
+            content: data.content,
+            sender: Number(getProfileId()),
+        }
+        websocket.send(JSON.stringify(payload))
         e.target.reset()
-        setMessages([...messages, response.data])
+    }
+
+    websocket.onmessage = function(e) {
+        const data = JSON.parse(e.data)
+        setMessages([...messages, data])
+    }
+
+    websocket.onclose = function() {
+        console.log('Websocket closed unexpectedly')
     }
 
     return (
