@@ -4,7 +4,7 @@ import ArrowBackIcon from "../../assets/back.svg"
 import { useEffect, useState } from "react"
 import { getPictureUrl } from "../../lib/utils"
 import { parseDateTime } from "../../lib/utils"
-import { getChatMessages } from "../../lib/services/chat"
+import { getChatMessages, sendMessage } from "../../lib/services/chat"
 
 /*
  * Chat box component (chat)
@@ -29,6 +29,17 @@ function ChatBox({ chat, onBack }) {
         setMessages(response.data)
     }
 
+    const handleSumbit = async (e) => {
+        e.preventDefault()
+        const data = Object.fromEntries(new FormData(e.target))
+
+        const response = await sendMessage(chat.id, data.content)
+        if (!response.success) { return }
+
+        e.target.reset()
+        setMessages([...messages, response.data])
+    }
+
     return (
         <div className={`${styles.div}`}>
             <div className={`${styles.toolbar}`}>
@@ -49,14 +60,14 @@ function ChatBox({ chat, onBack }) {
             <div className={`${styles.messages}`}>
                 {messages.map((message) => {
                     return (
-                        <div className={`${message.sender_id === userId ? styles.from_current_user : ""}`}>
+                        <div className={`${message.sender !== chat.profile.id ? styles.from_current_user : ""}`}>
                             <span>{message.content}</span>
-                            <span>{message.sended_on}</span>
+                            <span>{parseDateTime(message.created_at)}</span>
                         </div>
                     )
                 })}
             </div>
-            <form className={`${styles.form}`}>
+            <form className={`${styles.form}`} onSubmit={(e) => handleSumbit(e)}>
                 <input type="text" name="content" placeholder="Say something..." />
                 <button type="submit">Send</button>
             </form>
