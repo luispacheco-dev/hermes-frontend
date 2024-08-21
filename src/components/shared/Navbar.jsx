@@ -28,7 +28,6 @@ function Navbar() {
     const fetchProfile = async () => {
         const response = await getProfile()
         if (!response.success) { return }
-        console.log(response.data)
         setProfile(response.data)
     }
 
