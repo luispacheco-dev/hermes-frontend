@@ -1,5 +1,5 @@
 import { CHAT_BASE } from "../constants";
-import { getAccess } from "../stores/session"
+import { getAccess, getProfileId } from "../stores/session"
 
 export async function createChat(id) {
     const url = `${CHAT_BASE}/`
@@ -37,6 +37,40 @@ export async function getChatMessages(id) {
 
     const response = await fetch(url, {
         headers: { Authorization: authorization }
+    }).catch((error) => error)
+
+    if (response.status === 500) {
+        return { success: false, error: "Internal Error" }
+    }
+    if (response.status === 400) {
+        return { success: false, error: "Chat Doesn't Exist" }
+    }
+    if (response.status !== 200) {
+        return { success: false, error: "Something Goes Wrong" }
+    }
+
+    const data = await response.json()
+    return { success: true, data: data }
+}
+
+export async function sendMessage(cid, content) {
+    const sid = getProfileId()
+    const url = `${CHAT_BASE}/${cid}/messages/`
+
+    const accessToken = await getAccess()
+    const authorization = `Bearer ${accessToken}`
+
+    const payload = {
+        sender: sid,
+        content: content
+    }
+    const response = await fetch(url, {
+        method: "POST",
+        body: JSON.stringify(payload),
+        headers: {
+            Authorization: authorization,
+            "Content-Type": "application/json"
+        }
     }).catch((error) => error)
 
     if (response.status === 500) {
